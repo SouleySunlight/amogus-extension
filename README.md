@@ -1,1 +1,1 @@
-If you're reading the red me, you're sus
+If you're reading the read me, you're sus
