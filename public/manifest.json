@@ -11,5 +11,14 @@
       "16": "among-us16.png",
       "48": "among-us48.png",
       "128": "among-us128.png"
+  },
+  "permissions": [
+    "activeTab"
+ ],
+ "content_scripts": [
+  {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./static/js/content.js"]
   }
+]
 }
