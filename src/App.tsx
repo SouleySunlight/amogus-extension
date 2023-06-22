@@ -24,7 +24,7 @@ function App() {
             type: "GET_DOM",
           } as DOMMessage)
           .then((response: DOMMessageResponse) =>
-            setTitleList(response.headlines)
+            setTitleList(response.textToDisplay)
           )
           .catch((error) => console.log(error));
       });
