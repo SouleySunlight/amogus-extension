@@ -7,3 +7,11 @@ export const  hash =  async (textToHash: string): Promise<string> => {
         .join('');
     return hashHex;
 }
+
+export const getBitGrid = (bits:string): string[] =>{
+    const bitGrid = []
+    for(let i = 0; i<16; i++){
+         bitGrid.push(bits.slice(i*16,(i+1)*16))
+    }
+    return bitGrid
+}

@@ -1,6 +1,6 @@
-import { createHash } from "crypto";
+
 import { DOMMessage, DOMMessageResponse } from "../types/DOMMessages";
-import { hash } from "../utils";
+
 
  
 // Function called when a new message is received

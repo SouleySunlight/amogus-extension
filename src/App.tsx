@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import red from "./images/red.svg";
 import blue from "./images/blue.svg";
 import cyan from "./images/cyan.svg";
@@ -10,7 +10,7 @@ import yellow from "./images/yellow.svg";
 
 import "./App.css";
 import { DOMMessage, DOMMessageResponse } from "./types/DOMMessages";
-import { hash } from "./utils";
+import { getBitGrid, hash } from "./utils";
 
 function App() {
   const amogus = [red, blue, cyan, green, orange, pink, white, yellow];
@@ -19,6 +19,10 @@ function App() {
   const [hashedCode, setHashedCode] = useState("");
 
   hash(addedCode).then((result) => setHashedCode(result));
+  const bitsGrid = useMemo(() => getBitGrid(hashedCode), [hashedCode]);
+
+  const primaryAmogus = amogus[parseInt(bitsGrid[0].slice(0, 3), 2)];
+  const secondaryAmogus = amogus[parseInt(bitsGrid[1].slice(0, 3), 2)];
 
   useEffect(() => {
     chrome.tabs &&
@@ -41,16 +45,34 @@ function App() {
     <div className="App">
       <header className="App-header">
         <>
-          <button onClick={changeAmogus}>
-            <img src={currentAmogus} className="App-logo" alt="logo" />
-          </button>
-          <p>
-            {addedCode === "" ? (
-              "Rendez vous sur un commit sur github puis relancer l'extension"
-            ) : (
-              <p>{hashedCode}</p>
-            )}
-          </p>
+          {addedCode === "" && (
+            <button onClick={changeAmogus}>
+              <img src={currentAmogus} className="App-logo" alt="logo" />
+            </button>
+          )}
+
+          {addedCode === "" ? (
+            "Rendez vous sur un commit sur github puis relancer l'extension"
+          ) : (
+            <div className="amogus-grid-container">
+              {bitsGrid.map((bitLine) => {
+                const bitLineArray = Object.assign([], bitLine);
+                return (
+                  <div className="amogus-grid-line">
+                    {bitLineArray.map((bit) => {
+                      return (
+                        <img
+                          src={bit === "1" ? primaryAmogus : secondaryAmogus}
+                          className="grid-amogus"
+                          alt="amogus"
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </>
       </header>
     </div>
