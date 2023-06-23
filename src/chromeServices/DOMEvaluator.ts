@@ -1,4 +1,6 @@
+
 import { DOMMessage, DOMMessageResponse } from "../types/DOMMessages";
+
 
  
 // Function called when a new message is received
@@ -15,7 +17,10 @@ export const messagesFromReactAppListener = (
        return tdClassnames.includes('blob-code-addition')
    })
 
-   const additionLineTdsId = additionLineTds.map(td => td.innerText)
+   const additionLineTdsText = additionLineTds.map(td => td.innerText)
+
+   const addedCode = additionLineTdsText.reduce((accumulator, currentValue) => accumulator + currentValue, "")
+
 
 
     
@@ -23,7 +28,7 @@ export const messagesFromReactAppListener = (
     // Prepare the response object with information about the site
    const response: DOMMessageResponse = {
        title: document.title,
-       textToDisplay: additionLineTdsId
+       addedCode: addedCode
    };
  
    sendResponse(response);
