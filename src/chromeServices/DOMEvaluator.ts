@@ -8,13 +8,22 @@ export const messagesFromReactAppListener = (
    sendResponse: (response: DOMMessageResponse) => void) => {
   
  
-   const headlines = Array.from(document.getElementsByTagName<"h1">("h1"))
-                       .map(h1 => h1.innerText);
- 
+   const allTds = Array.from(document.getElementsByTagName<"td">("td"))
+    
+   const additionLineTds = allTds.filter((allTds)=>{
+       const tdClassnames = allTds.className.split(' ')
+       return tdClassnames.includes('blob-code-addition')
+   })
+
+   const additionLineTdsId = additionLineTds.map(td => td.innerText)
+
+
+    
+
     // Prepare the response object with information about the site
    const response: DOMMessageResponse = {
        title: document.title,
-       headlines
+       textToDisplay: additionLineTdsId
    };
  
    sendResponse(response);
