@@ -14,7 +14,7 @@ import { DOMMessage, DOMMessageResponse } from "./types/DOMMessages";
 function App() {
   const amogus = [red, blue, cyan, green, orange, pink, white, yellow];
   const [currentAmogus, setCurrentAmogus] = useState(red);
-  const [titleList, setTitleList] = useState<string[]>([]);
+  const [addedCode, setAddedCode] = useState("");
 
   useEffect(() => {
     chrome.tabs &&
@@ -24,7 +24,7 @@ function App() {
             type: "GET_DOM",
           } as DOMMessage)
           .then((response: DOMMessageResponse) =>
-            setTitleList(response.textToDisplay)
+            setAddedCode(response.addedCode)
           )
           .catch((error) => console.log(error));
       });
@@ -41,9 +41,11 @@ function App() {
             <img src={currentAmogus} className="App-logo" alt="logo" />
           </button>
           <p>
-            {titleList.length === 0
-              ? "pas de h1 pour cet onglet"
-              : titleList.map((title) => <p>{title}</p>)}
+            {addedCode === "" ? (
+              "Rendez vous sur un commit sur github puis relancer l'extension"
+            ) : (
+              <p>{addedCode}</p>
+            )}
           </p>
         </>
       </header>
