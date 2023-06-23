@@ -10,11 +10,15 @@ import yellow from "./images/yellow.svg";
 
 import "./App.css";
 import { DOMMessage, DOMMessageResponse } from "./types/DOMMessages";
+import { hash } from "./utils";
 
 function App() {
   const amogus = [red, blue, cyan, green, orange, pink, white, yellow];
   const [currentAmogus, setCurrentAmogus] = useState(red);
   const [addedCode, setAddedCode] = useState("");
+  const [hashedCode, setHashedCode] = useState("");
+
+  hash(addedCode).then((result) => setHashedCode(result));
 
   useEffect(() => {
     chrome.tabs &&
@@ -44,7 +48,7 @@ function App() {
             {addedCode === "" ? (
               "Rendez vous sur un commit sur github puis relancer l'extension"
             ) : (
-              <p>{addedCode}</p>
+              <p>{hashedCode}</p>
             )}
           </p>
         </>

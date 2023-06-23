@@ -1,4 +1,6 @@
+import { createHash } from "crypto";
 import { DOMMessage, DOMMessageResponse } from "../types/DOMMessages";
+import { hash } from "../utils";
 
  
 // Function called when a new message is received
@@ -20,12 +22,13 @@ export const messagesFromReactAppListener = (
    const addedCode = additionLineTdsText.reduce((accumulator, currentValue) => accumulator + currentValue, "")
 
 
+
     
 
     // Prepare the response object with information about the site
    const response: DOMMessageResponse = {
        title: document.title,
-       addedCode
+       addedCode: addedCode
    };
  
    sendResponse(response);
